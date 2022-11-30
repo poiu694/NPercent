@@ -56,15 +56,26 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (poses.length === 3) {
-      const threePoses = poses;
-      (async () => {
-        const res = await axios.post('http://localhost:8080', {
+    async function sendPositions(poses) {
+      try {
+        const res = await axios.post('http://localhost:8000/convert', {
           exe_num: 5,
-          frames: threePoses,
+          frames: poses,
         });
         console.log(res);
-      })();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (poses.length === 3) {
+      // console.log(poses);
+      const threeFrameXYPositions = poses.map(({ keypoints }) => {
+        return keypoints.map((keypoint) => ({
+          x: keypoint.position.x,
+          y: keypoint.position.y,
+        }));
+      });
+      sendPositions(threeFrameXYPositions);
     }
   }, [poses]);
 
