@@ -8,6 +8,7 @@ export default function App() {
   const webcamRef = React.useRef(null);
   const canvasRef = React.useRef(null);
   const [poses, setPoses] = useState([]);
+  const [resultByPoses, setResultByPoses] = useState([]);
 
   const detectWebcamFeed = async (model) => {
     if (
@@ -62,7 +63,8 @@ export default function App() {
           exe_num: 5,
           frames: poses,
         });
-        console.log(res);
+        const { data } = res;
+        setResultByPoses((prev) => [...prev, data]);
       } catch (err) {
         console.error(err);
       }
@@ -76,6 +78,7 @@ export default function App() {
         }));
       });
       sendPositions(threeFrameXYPositions);
+      setPoses([]);
     }
   }, [poses]);
 
@@ -114,25 +117,23 @@ export default function App() {
       <table style={{ width: '100%', margin: '500px auto 0 auto' }}>
         <thead>
           <tr>
-            <th>hi</th>
-            <th>hi</th>
-            <th>hi</th>
-            <th>hi</th>
+            <th>1번</th>
+            <th>2번</th>
+            <th>3번</th>
+            <th>4번</th>
+            <th>5번</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>hi2</td>
-            <td>hi2</td>
-            <td>hi2</td>
-            <td>hi2</td>
-          </tr>
-          <tr>
-            <td>hi3</td>
-            <td>hi3</td>
-            <td>hi3</td>
-            <td>hi3</td>
-          </tr>
+          {resultByPoses.map((result) => (
+            <tr>
+              <td>{result[0]}%</td>
+              <td>{result[1]}%</td>
+              <td>{result[2]}%</td>
+              <td>{result[3]}%</td>
+              <td>{result[4]}%</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
