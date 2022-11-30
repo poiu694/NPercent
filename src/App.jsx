@@ -127,11 +127,11 @@ export default function App() {
         <tbody>
           {resultByPoses.map((result) => (
             <tr>
-              <td>{result[0]}%</td>
-              <td>{result[1]}%</td>
-              <td>{result[2]}%</td>
-              <td>{result[3]}%</td>
-              <td>{result[4]}%</td>
+              <td>{result[0].toFixed(1)}%</td>
+              <td>{result[1].toFixed(1)}%</td>
+              <td>{result[2].toFixed(1)}%</td>
+              <td>{result[3].toFixed(1)}%</td>
+              <td>{result[4].toFixed(1)}%</td>
             </tr>
           ))}
         </tbody>
