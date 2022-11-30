@@ -1,0 +1,33 @@
+.App {
+  width: 80%;
+  margin: 80px auto;
+  text-align: center;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-header > h3 {
+  font-weight: 700;
+  color: red;
+}
+
+.webcam__container--wrapper {
+  position: relative;
+}
+
+table {
+  text-align: center;
+  border: 1px solid black;
+}
+
+th {
+  border: 1px solid black;
+}
+
+td {
+  padding: 16px;
+  border: 1px solid black;
+}
