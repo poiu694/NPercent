@@ -3,12 +3,14 @@ import * as posenet from '@tensorflow-models/posenet';
 import Webcam from 'react-webcam';
 import axios from 'axios';
 import { drawKeypoints, drawSkeleton } from './util';
+import { CONDITION_INFOMATION } from './constant';
 
 export default function App() {
   const webcamRef = React.useRef(null);
   const canvasRef = React.useRef(null);
   const [poses, setPoses] = useState([]);
   const [resultByPoses, setResultByPoses] = useState([]);
+  const [exerciseNum, setExerciseNum] = useState(1);
 
   const detectWebcamFeed = async (model) => {
     if (
@@ -60,7 +62,7 @@ export default function App() {
     async function sendPositions(poses) {
       try {
         const res = await axios.post('http://localhost:8000/convert', {
-          exe_num: 5,
+          exe_num: exerciseNum,
           frames: poses,
         });
         const { data } = res;
@@ -112,26 +114,63 @@ export default function App() {
             }}
           />
         </div>
-        <h3>해당 부분에 집중해 보세요!</h3>
+        <div>
+          <div
+            className='header--exercise__content'
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 32,
+            }}
+          >
+            <div
+              className='header--exercise__selector'
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <h3 style={{ marginRight: 16 }}>운동 선택</h3>
+              <select
+                value={exerciseNum}
+                onChange={(e) => setExerciseNum(e.target.value)}
+              >
+                {[
+                  1, 2, 3, 4, 5, 6, 7, 8, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+                ].map((num) => (
+                  <option key={num} value={num}>
+                    {num} - {CONDITION_INFOMATION[num]?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div style={{ textAlign: 'start' }}>
+              <h3>운동 조건</h3>
+              {CONDITION_INFOMATION[exerciseNum]?.conditions.map(
+                (condition, idx) => (
+                  <div style={{ color: 'red', fontWeight: 700 }} key={idx}>
+                    {idx + 1} : {condition}
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </div>
       </header>
-      <table style={{ width: '100%', margin: '500px auto 0 auto' }}>
+      <table style={{ width: '100%', margin: '300px auto 0 auto' }}>
         <thead>
           <tr>
-            <th>1번</th>
-            <th>2번</th>
-            <th>3번</th>
-            <th>4번</th>
-            <th>5번</th>
+            {CONDITION_INFOMATION[exerciseNum]?.conditions.map((_, idx) => (
+              <th key={idx}>{idx + 1}번</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {resultByPoses.map((result) => (
+          {resultByPoses.map((results) => (
             <tr>
-              <td>{result[0].toFixed(1)}%</td>
-              <td>{result[1].toFixed(1)}%</td>
-              <td>{result[2].toFixed(1)}%</td>
-              <td>{result[3].toFixed(1)}%</td>
-              <td>{result[4].toFixed(1)}%</td>
+              {results.map((result) => (
+                <td key={result}>{result.toFixed(1)}%</td>
+              ))}
             </tr>
           ))}
         </tbody>
