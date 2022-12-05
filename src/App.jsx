@@ -12,6 +12,12 @@ export default function App() {
   const [resultByPoses, setResultByPoses] = useState([]);
   const [exerciseNum, setExerciseNum] = useState(1);
 
+  console.log(
+    Object.entries(CONDITION_INFOMATION).map(([key, value]) =>
+      console.log(`${key} ${value.name}`)
+    )
+  );
+
   const detectWebcamFeed = async (model) => {
     if (
       typeof webcamRef.current !== 'undefined' &&
@@ -66,7 +72,7 @@ export default function App() {
           frames: poses,
         });
         const { data } = res;
-        setResultByPoses((prev) => [...prev, data]);
+        setResultByPoses((prev) => [data, ...prev]);
       } catch (err) {
         console.error(err);
       }
@@ -85,10 +91,10 @@ export default function App() {
   }, [poses]);
 
   return (
-    <div className='App'>
+    <div className="App">
       <h1>NPercent Tester Webpage</h1>
-      <header className='app-header'>
-        <div className='webcam__container--wrapper'>
+      <header className="app-header">
+        <div className="webcam__container--wrapper">
           <Webcam
             ref={webcamRef}
             style={{
@@ -116,7 +122,7 @@ export default function App() {
         </div>
         <div>
           <div
-            className='header--exercise__content'
+            className="header--exercise__content"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -124,7 +130,7 @@ export default function App() {
             }}
           >
             <div
-              className='header--exercise__selector'
+              className="header--exercise__selector"
               style={{
                 display: 'flex',
                 justifyContent: 'space-between',
