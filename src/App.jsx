@@ -77,7 +77,7 @@ export default function App() {
         console.error(err);
       }
     }
-    if (poses.length === 3) {
+    if (poses.length === 5) {
       // console.log(poses);
       const threeFrameXYPositions = poses.map(({ keypoints }) => {
         return keypoints.map((keypoint) => ({
