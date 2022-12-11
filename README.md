@@ -8,7 +8,7 @@
 
 실제 사용하는 예시입니다.
 
-[text_example](./asset/test_example.gif)
+![text_example](./asset/test_example.gif)
 
 ## Training
 
