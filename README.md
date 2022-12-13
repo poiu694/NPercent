@@ -12,8 +12,8 @@
 
 ## Training
 
-![model1](./asset/model1.png)
+<img src='./asset/model1.png' alt='model' style='background-color: white' />
 
-![model2](./asset/model2.png)
+<img src='./asset/model2.png' alt='model' style='background-color: white' />
 
-![model3](./asset/model3.png)
+<img src='./asset/model3.png' alt='model' style='background-color: white' />
